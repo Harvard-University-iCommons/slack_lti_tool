@@ -1,6 +1,8 @@
 # Slack LTI Tool for Canvas
 
-The Slack LTI Tool for Canvas lets instructors provision Slack Enterprise Grid workspaces for their courses.
+The Slack LTI Tool for Canvas lets instructors provision Slack Enterprise Grid workspaces for their courses.  
+
+This code was originally developed for Harvard by @Chris-Thornton-Harvard and @cmurtaugh. 
 
 ## Quick start
 
