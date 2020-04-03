@@ -1,0 +1,14 @@
+{% extends "slack_provisioning/base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="page-header">
+</div>
+<div>
+    <h1>We encountered an error.</h1>
+    <p class="lead">
+        {{ message }}
+    </p>
+</div>
+{% endblock content %}

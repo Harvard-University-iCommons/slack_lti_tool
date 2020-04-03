@@ -1,0 +1,34 @@
+{% extends "slack_provisioning/base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="page-header">
+</div>
+<div>
+    {% if errors %}
+        <h1>We encountered an error.</h1>
+        <p class="lead">
+            Unfortunately there was an error creating your Slack workspace!<br>
+            Please contact [your support contact] for additional support.
+        </p>
+    {% else %}
+        <h1>Your new Slack Workspace has been created!</h1>
+        <p class="lead">
+            Other members of the course can join the new Workspace by visiting this page.
+            When teaching staff members join, they'll become administrators of the Workspace.
+        </p>
+
+        <p class="lead">
+            [Optional: add some links to local documentation about Slack here.]
+        </p>
+        <p class="lead">
+            <a href="https://slack.com/download" target="_new">Get the Slack App for your computer or mobile device</a>, or use Slack right in your browser.
+        </p>
+        <p>
+            <a class="btn btn-success btn-large" href="https://{{ slack_workspace.team_domain }}.slack.com/ssb/redirect" target="_new">Open in the Slack App <i class="fa fa-external-link"></i></a>
+            <a class="btn btn-primary btn-large" href="https://{{ slack_workspace.team_domain }}.slack.com" target="_new">Open in browser  <i class="fa fa-external-link"></i></a>
+        </p>
+    {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,83 @@
+{% extends "slack_provisioning/base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="page-header">
+</div>
+<div>
+    <p>
+        {% if slack_workspace and slack_workspace.status == "failed" %}
+            <h1>We encountered an error.</h1>
+            <p class="lead">
+                {% if user_is_staff %}
+                    Unfortunately there was an error creating the Slack Workspace for this course.<br>
+                    Please contact [your support contact] for additional support.
+                {% else %}
+                    Please try again later.
+                {% endif %}
+            </p>
+        {% elif slack_workspace and slack_workspace.status == "completed" %}
+            <h1>Good news! A Slack Workspace has been created for this course.</h1>
+
+            {% if workspace_member %}
+                <p class="lead">
+                    You're a member of the {{ slack_workspace.team_name }} Workspace, and you can access it using the buttons below.
+                </p>
+                <p class="lead">
+                    <a href="https://slack.com/download" target="_new">Get the Slack App for your computer or mobile device</a>, or use Slack right in your browser.
+                </p>
+                <a class="btn btn-success btn-large" href="https://{{ slack_workspace.team_domain }}.slack.com/ssb/redirect" target="_top">Open in the Slack App <i class="fa fa-external-link"></i></a>
+
+                <a class="btn btn-primary btn-large" href="https://{{ slack_workspace.team_domain }}.slack.com" target="_new">Open in browser  <i class="fa fa-external-link"></i></a>
+            {% else %}
+                <p class="lead">
+                    You are currently not a member of this Slack Workspace, but you can join by clicking on the button below.
+                </p>
+                {% if not existing_slack_user %}
+                    <p class="lead">
+                        By clicking the “Join Slack Workspace” button below, you are activating your Enterprise Slack Grid account.
+                        By activating your account, you acknowledge that your full name will be discoverable in the Harvard Enterprise Slack Grid directory.
+                    </p>
+                    <p class="lead">
+                        All members of the Enterprise Slack Grid will have the ability to search for and contact you using your full name.
+                        If you do not wish to be discoverable within the Enterprise Slack Grid, do not activate your account.
+                    </p>
+                {% endif %}
+                <form action="{% url 'slack_provisioning:join_slack_workspace' %}" method="POST">{% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Joining...">Join Slack Workspace</button>
+                </form>
+            {% endif %}
+        {% elif user_is_staff %}
+            <h1>A Slack Workspace doesn't exist yet for this course, but you can create one here.</h1>
+            <p class="lead">
+                As a member of the teaching staff for this course, you can request a new Slack Workspace by clicking on the button below.
+                <a href="https://slack.com/help/articles/115004071768-What-is-Slack-" target="_new">Learn more about Slack and its features.</a>
+            </p>
+
+            <p class="lead">
+                We'll add you as an administrator of the new Workspace, and the other members of this course will be able to join by visiting this page.
+            </p>
+            <form action="{% url 'slack_provisioning:provision_slack_workspace' %}" method="POST">{% csrf_token %}
+                <button type="submit" id="provision" class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Creating...">Request a new Slack Workspace</button>
+            </form>
+        {% else %}
+            <h1>A Slack Workspace hasn't been created for this course.</h1>
+            <p class="lead">
+                If a Workspace is created later, this message will be replaced with instructions on how to join.
+            </p>
+        {% endif %}
+    </p>
+</div>
+
+{% endblock content %}
+
+
+{% block javascript %}
+    {{ block.super }}
+    <script>
+        $('#provision').on('click', function () {
+            var $btn = $(this).button('loading')
+        })
+    </script>
+{% endblock javascript %}

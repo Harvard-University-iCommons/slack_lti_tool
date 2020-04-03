@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block head_meta %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% endblock head_meta %}
+
+  {% block fonts %}
+    <link href="//fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
+  {% endblock fonts %}
+  {% block stylesheet %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <style>
+      body {
+        font-family: Lato, Helvetica, sans-serif;
+      }
+    </style>
+  {% endblock stylesheet %}
+  <title>{% block page_title %}{% endblock page_title %}</title>
+
+  {% block head_extra %}{% endblock head_extra %}
+</head>
+{% block bodytag %}<body class="lti">{% endblock bodytag %}
+
+  {% block messages %}
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == 'error' %}
+          <div class="alert alert-danger alert-dismissable">
+        {% else %}
+          <div class="alert alert-{{ message.tags }} alert-dismissable">
+        {% endif %}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+          </div>
+        {% endfor %}
+    {% endif %}
+  {% endblock messages %}
+
+  {% block content %}{% endblock content %}
+
+  {% block footer %}{% endblock footer %}
+
+  {% block javascript %}
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+  {% endblock javascript %}
+  {% block extra_javascript %}{% endblock extra_javascript %}
+</body>
+</html>
