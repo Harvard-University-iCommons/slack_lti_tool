@@ -154,7 +154,6 @@ def lti_launch(request):
 
 @require_http_methods(['POST'])
 @login_required
-@csrf_exempt
 def provision_slack_workspace(request):
     """
     Handles the process when a course staff member clicks the "Provision Slack Workspace" button when an space
@@ -223,7 +222,6 @@ def provision_slack_workspace(request):
 
 @require_http_methods(['POST'])
 @login_required
-@csrf_exempt
 def join_slack_workspace(request):
     context = {}
     errors = False
