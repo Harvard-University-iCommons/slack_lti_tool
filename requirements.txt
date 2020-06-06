@@ -1,4 +1,4 @@
-Django==2.2.12
+Django==2.2.13
 pytz==2019.3
 sqlparse==0.3.1
 git+https://github.com/Harvard-University-iCommons/django-auth-lti.git@v2.0.2#egg=django-auth-lti==2.0.2
